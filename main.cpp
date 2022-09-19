@@ -16,7 +16,7 @@ int main(int argv, char **args)
     Collidable *block2 = new Block(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\brick.png", 52, 500, 0, 0);
     Collidable *block3 = new Block(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\brick.png", 500, 50, 0, 0);
     Collidable *block4 = new Block(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\brick.png", 57, 500, 450, 0);
-    Hook* hook = new Hook(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\hook.png", 50, 50, 250, 250);
+   // Hook* hook = new Hook(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\hook.png", 50, 50, 250, 250);
         LevelObjects *lvlObjs = new LevelObjects();
     lvlObjs->addBlock(block1);
     lvlObjs->addBlock(block2);
@@ -56,19 +56,22 @@ int main(int argv, char **args)
                 case SDL_SCANCODE_RIGHT:
                     player->update(right, lvlObjs);
                     break;
+                case SDL_SCANCODE_SPACE:
+                    player->update(space, lvlObjs);
+                    break;
                 default:
                     break;
                 }
             }
         }
         player->update(0, lvlObjs);
-        hook->update(0, lvlObjs);
+       // hook->update(0, lvlObjs);
             block1->draw();
         block2->draw();
         block3->draw();
         block4->draw();
         player->draw();
-        hook->draw();
+      //  hook->draw();
         
         // triggers the double buffers
         // for multiple rendering

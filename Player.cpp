@@ -3,32 +3,49 @@
 //#include "LevelObjects.h"
 Player::Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y) : Collidable(rendererArg, sprite_path, width, height, x, y)
 {
+    this->horizontalRight = 1;
     this->speed = 500;
+    this->hook = new Hook(rendererArg, "C:\\Users\\eldor\\OneDrive\\Desktop\\hook.png", 50, 50, x + width, y + (height / 2), 1);
 }
 void Player::draw()
 {
-    SDL_RenderCopy(this->renderer, this->texture, NULL, this->rect);
+    if (horizontalRight)
+    {
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, NULL, NULL, SDL_FLIP_NONE);
+    }
+    else
+    {
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, NULL, NULL, SDL_FLIP_HORIZONTAL);
+    }
+    this->hook->draw();
 }
-void Player::update(int action,LevelObjects* data)
+void Player::update(int action, LevelObjects *data)
 {
     switch (action)
     {
     case up:
-        this->rect->y -= speed/5;
+        this->rect->y -= speed / 5;
         break;
     case left:
+        this->horizontalRight = 0;
+        this->hook->setHorizontalRight(0);
         this->rect->x -= speed / 30;
         break;
     case right:
+        this->horizontalRight = 1;
+        this->hook->setHorizontalRight(1);
         this->rect->x += speed / 30;
+        break;
+    case space:
+        this->hook->update(1, data);
         break;
     default:
         break;
     }
     for (auto *block : data->getBlocksList())
     {
-        SDL_Rect* currRect = block->getRect();
-        if (!SDL_HasIntersection(this->rect,currRect))
+        SDL_Rect *currRect = block->getRect();
+        if (!SDL_HasIntersection(this->rect, currRect))
         {
             continue;
         }
@@ -55,9 +72,19 @@ void Player::update(int action,LevelObjects* data)
         {
             continue;
         }
-        this->rect->y = currRect->y-this->rect->h;
+        this->rect->y = currRect->y - this->rect->h;
     }
- 
+
+    if (this->horizontalRight)
+    {
+        this->hook->getRect()->x = this->rect->x + this->rect->w;
+    }
+    else
+    {
+        this->hook->getRect()->x = this->rect->x - this->hook->getRect()->w;
+    }
+    this->hook->getRect()->y = this->rect->y + (this->rect->h / 2);
+    this->hook->update(0, data);
 }
 Player::~Player()
 {
