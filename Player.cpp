@@ -1,54 +1,64 @@
 #include "Player.h"
-Player::Player(SDL_Renderer *rendererArg)
+//#include "Collidable.cpp"
+//#include "LevelObjects.h"
+Player::Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y) : Collidable(rendererArg, sprite_path, width, height, x, y)
 {
-    this->speed = 300;
-    this->renderer = rendererArg;
-    SDL_Surface *surface = IMG_Load("C:\\Users\\eldor\\OneDrive\\Desktop\\Untitled.png");
-    this->texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_FreeSurface(surface);
-    SDL_QueryTexture(this->texture, NULL, NULL, &this->rect.w, &this->rect.h);
-    this->rect.w /= 6;
-    this->rect.h /= 6;
-    this->rect.x = (500 - this->rect.w) / 2;
-    this->rect.y = (500 - this->rect.h) / 2;
+    this->speed = 500;
 }
 void Player::draw()
 {
-    SDL_RenderCopy(this->renderer, this->texture, NULL, &this->rect);
+    SDL_RenderCopy(this->renderer, this->texture, NULL, this->rect);
 }
-void Player::update(int action)
+void Player::update(int action,LevelObjects* data)
 {
     switch (action)
     {
     case up:
-        this->rect.y -= speed / 30;
+        this->rect->y -= speed/5;
         break;
     case left:
-        this->rect.x -= speed / 30;
+        this->rect->x -= speed / 30;
         break;
     case right:
-        this->rect.x += speed / 30;
+        this->rect->x += speed / 30;
         break;
     default:
-        this->rect.y += speed / 30;
         break;
     }
-    // right boundary
-    if (this->rect.x + this->rect.w > 500)
-        this->rect.x = 500 - this->rect.w;
-
-    // left boundary
-    if (this->rect.x < 0)
-        this->rect.x = 0;
-
-    // bottom boundary
-    if (this->rect.y + this->rect.h > 500)
-        this->rect.y = 500 - this->rect.h;
-    // upper boundary
-    if (this->rect.y < 0)
-        this->rect.y = 0;
+    for (auto *block : data->getBlocksList())
+    {
+        SDL_Rect* currRect = block->getRect();
+        if (!SDL_HasIntersection(this->rect,currRect))
+        {
+            continue;
+        }
+        switch (action)
+        {
+        case up:
+            this->rect->y = currRect->y + currRect->h;
+            break;
+        case left:
+            this->rect->x = currRect->x + currRect->w;
+            break;
+        case right:
+            this->rect->x = currRect->x - this->rect->w;
+            break;
+        default:
+            break;
+        }
+    }
+    this->rect->y += speed / 30;
+    for (auto *block : data->getBlocksList())
+    {
+        SDL_Rect *currRect = block->getRect();
+        if (!SDL_HasIntersection(this->rect, currRect))
+        {
+            continue;
+        }
+        this->rect->y = currRect->y-this->rect->h;
+    }
+ 
 }
 Player::~Player()
 {
-    SDL_DestroyTexture(this->texture);
 }

@@ -3,17 +3,19 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "actions.cpp"
-class Player{
-    private:
-    SDL_Texture* texture;
-    SDL_Rect rect;
-    SDL_Renderer* renderer;
+#include "Collidable.h"
+#include "Updatable.h"
+#include "LevelObjects.h"
+class LevelObjects;
+
+class Player : public Collidable, public Updatable
+{
+private:
     int speed;
     public:
-    Player(SDL_Renderer* rendererArg);
-    ~Player();
-    void draw();
-    void update(int action);
+        Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y);
+        ~Player();
+        virtual void draw();
+        virtual void update(int action, LevelObjects* data);
 };
 #endif

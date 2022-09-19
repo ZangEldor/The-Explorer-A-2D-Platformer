@@ -7,7 +7,13 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "main.cpp",
+                    "Hook.cpp",            
+                "player.cpp",
+                
+                "block.cpp",
+                "LevelObjects.cpp",
+                
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-lmingw32",
