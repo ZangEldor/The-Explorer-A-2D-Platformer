@@ -10,8 +10,11 @@
                 "main.cpp",
                     "Hook.cpp",            
                 "player.cpp",
+                "Spike.cpp",
+                "Enemy.cpp",
                 
                 "block.cpp",
+
                 "LevelObjects.cpp",
                 
                 "-o",

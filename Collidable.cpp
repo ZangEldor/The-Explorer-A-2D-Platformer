@@ -7,6 +7,7 @@ Collidable::Collidable(SDL_Renderer *rendererArg, char *sprite_path,int width, i
     this->texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_FreeSurface(surface);
     SDL_QueryTexture(this->texture, NULL, NULL, &this->rect->w, &this->rect->h);
+
     this->rect->w = width;
     this->rect->h = height;
     this->rect->x = x;

@@ -3,28 +3,31 @@
 //#include "Player.h"
 #include <vector>
 #include <list>
+
 class Player;
 class Collidable;
+class Enemy;
+class Block;
 class LevelObjects
 {
 private:
-    std::vector<Collidable *> enemies;
-    std::vector<Collidable *> blocks;
+    std::vector<Enemy *> enemies;
+    std::vector<Block *> blocks;
     Player *player;
-    std::vector<Collidable *> invBlocks;
+    std::vector<Block *> invBlocks;
     Collidable *finish;
 
 public:
     LevelObjects();
-    std::vector<Collidable *> getEnemiesList();
-    std::vector<Collidable *> getBlocksList();
-    std::vector<Collidable *> getInvBlocksList();
+    std::vector<Enemy *> getEnemiesList();
+    std::vector<Block *> getBlocksList();
+    std::vector<Block *> getInvBlocksList();
     Player *getPlayer();
     Collidable *getFinish();
-    void addEnemy(Collidable *enemy);
+    void addEnemy(Enemy *enemy);
     void setPlayer(Player *player);
-    void addBlock(Collidable *block);
-    void addInvBlock(Collidable *invBlock);
+    void addBlock(Block *block);
+    void addInvBlock(Block *invBlock);
     void setFinish(Collidable *finish);
 };
 #endif

@@ -2,6 +2,7 @@
 #include "Hook.h"
 #include <cmath>
 #include <math.h>
+#include "Block.h"
 #define _USE_MATH_DEFINES
 Hook::Hook(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int horizontalRight) : Collidable(rendererArg, sprite_path, width, height, x, y)
 {

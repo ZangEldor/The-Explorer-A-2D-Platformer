@@ -16,8 +16,10 @@ private:
     int isHookLaunched;
     Hook* hook;
     int horizontalRight;
+    int* levelActivePtr;
+    bool checkEnemyCollision(LevelObjects* data);
     public:
-        Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y);
+        Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int* levelActivePtr);
         ~Player();
         virtual void draw();
         virtual void update(int action, LevelObjects* data);
