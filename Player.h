@@ -13,6 +13,7 @@ class Player : public Collidable, public Updatable
 {
 private:
     int speed;
+    int isHookLaunched;
     Hook* hook;
     int horizontalRight;
     public:

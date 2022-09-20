@@ -13,12 +13,18 @@ private:
     int verticalUp;
     int horizontalRight;
     int isLaunched;
+    int isHooked;
     SDL_Point launchPoint;
 
 public:
     Hook(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int horizontalRight);
     ~Hook();
+    int getIsHooked();
+    int getIsLaunched();
     void setHorizontalRight(int value);
+    void setIsLaunced(int value);
+    void setIsHooked(int value);
+
     virtual void draw();
     virtual void update(int action, LevelObjects *data);
 };

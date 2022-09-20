@@ -40,10 +40,6 @@ int main(int argv, char **args)
             case SDL_KEYDOWN:
                 switch (event.key.keysym.scancode)
                 {
-                case SDL_SCANCODE_W:
-                case SDL_SCANCODE_UP:
-                    player->update(up, lvlObjs);
-                    break;
                 case SDL_SCANCODE_A:
                 case SDL_SCANCODE_LEFT:
                     player->update(left, lvlObjs);
@@ -66,7 +62,7 @@ int main(int argv, char **args)
         }
         player->update(0, lvlObjs);
        // hook->update(0, lvlObjs);
-            block1->draw();
+        block1->draw();
         block2->draw();
         block3->draw();
         block4->draw();

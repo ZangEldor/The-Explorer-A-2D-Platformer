@@ -1,11 +1,12 @@
 #include "Collidable.cpp"
 #include "Hook.h"
 #include <cmath>
-#include<math.h>
+#include <math.h>
 #define _USE_MATH_DEFINES
 Hook::Hook(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int horizontalRight) : Collidable(rendererArg, sprite_path, width, height, x, y)
 {
-    this->angle = 0.0;
+    this->isHooked = 0;
+     this->angle = 0.0;
     this->isLaunched = 0.0;
     this->verticalUp = 1;
     this->horizontalRight = horizontalRight;
@@ -18,7 +19,7 @@ void Hook::draw()
     }
     else
     {
-        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, this->angle, NULL, SDL_FLIP_HORIZONTAL);
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, (-1 * this->angle), NULL, SDL_FLIP_HORIZONTAL);
     }
 }
 void Hook::update(int action, LevelObjects *data)
@@ -27,24 +28,25 @@ void Hook::update(int action, LevelObjects *data)
     currLocation.x = this->rect->x;
     currLocation.y = this->rect->y;
 
-    if (isLaunched == 0 && action == 0)
+    if (isLaunched == 0 && action == 0 && isHooked == 0)
     {
-        if (this->verticalUp != 0)
+
+        if (this->verticalUp == 0)
         {
             this->angle += 1.0;
-            if (this->angle > 90)
+            if (this->angle >= 0)
             {
-                this->angle = 90;
-                this->verticalUp = 0;
+                this->angle = -1;
+                this->verticalUp = 1;
             }
         }
         else
         {
             this->angle -= 1.0;
-            if (this->angle < -90)
+            if (this->angle <= -90)
             {
-                this->angle = -90;
-                this->verticalUp = 1;
+                this->angle = -89;
+                this->verticalUp = 0;
             }
         }
     }
@@ -54,15 +56,33 @@ void Hook::update(int action, LevelObjects *data)
         launchPoint.x = this->rect->x;
         launchPoint.y = this->rect->y;
     }
-    else if(isLaunched == 1){
-        double radianAngle = angle * (3.14 / 180);
+    else if (isLaunched == 1)
+    {
+        double radianAngle;
+        double adjustmentDegree = 0;
+        /*
+        if (!this->horizontalRight)
+        {
+            adjustmentDegree = 90;
+        }
+        */
+        radianAngle = (-1*angle + adjustmentDegree) * (3.14 / 180);
         double result = 20 * sin(radianAngle);
-        this->rect->y += result;
-        if(horizontalRight){
-            result = 20 * cos(radianAngle);
+        if (angle <= 0)
+        {
+            this->rect->y -= result;
+        }
+        else
+        {
+            this->rect->y += result;
+        }
+        result = 20 * cos(radianAngle);
+        if (horizontalRight)
+        {
             this->rect->x += result;
-        }else{
-            result = 20 * cos(radianAngle);
+        }
+        else
+        {
             this->rect->x -= result;
         }
         for (auto *block : data->getBlocksList())
@@ -72,16 +92,31 @@ void Hook::update(int action, LevelObjects *data)
             {
                 this->rect->x = currLocation.x;
                 this->rect->y = currLocation.y;
-                isLaunched=0;
+                isLaunched = 0;
+                this->isHooked = 1;
                  break;
             }
-            
         }
     }
 }
 void Hook::setHorizontalRight(int value)
 {
     this->horizontalRight = value;
+}
+void Hook::setIsHooked(int value)
+{
+    this->isHooked = value;
+}
+void Hook::setIsLaunced(int value)
+{
+    this->isLaunched = value;
+}
+int Hook::getIsHooked(){
+    return this->isHooked;
+}
+int Hook::getIsLaunched()
+{
+    return this->isLaunched;
 }
 Hook::~Hook()
 {
