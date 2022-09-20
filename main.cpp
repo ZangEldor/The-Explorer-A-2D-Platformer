@@ -6,7 +6,7 @@
 #include "Block.h"
 #include "Hook.h"
 #include "Spike.h"
-
+#include "LevelFinish.h"
 #include <fstream>
 int main(int argv, char **args)
 {
@@ -24,17 +24,31 @@ int main(int argv, char **args)
         while (fileStream.get(currChar))
         {
             if (currChar == 'P'){
-                Player *player = new Player(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\Untitled.png", 20, 20,  i * 20,  j * 20, levelActivePtr);
+                Player *player = new Player(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\bigplayer.png", 40, 60,  i * 20,  j * 20, levelActivePtr);
                 lvlObjs->setPlayer(player);
             }else if(currChar == '0'){
-                Block *block = new Block(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\brick.png", 20, 20,  i * 20,   j * 20);
+                Block *block = new Block(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\floor.png", 20, 20,  i * 20,   j * 20);
                 lvlObjs->addBlock(block);
-            }else if(currChar == 'E'){
+            }
+            else if (currChar == '1')
+            {
+                Block *block = new Block(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\block.png", 20, 20, i * 20, j * 20);
+                lvlObjs->addBlock(block);
+            }
+            else if (currChar == 'E')
+            {
                 Enemy *enemy = new Enemy(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\enemy.png", 20, 20, i * 20, j * 20);
                 lvlObjs->addEnemy(enemy);
-            }else if(currChar == 'S'){
+            }
+            else if (currChar == 'S')
+            {
                 Enemy *enemy = new Spike(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\spike.png", 20, 20, i * 20, j * 20);
                 lvlObjs->addEnemy(enemy);
+            }
+            else if (currChar == 'F')
+            {
+                LevelFinish *finish = new LevelFinish(renderer, "C:\\Users\\eldor\\OneDrive\\Desktop\\flag.png", 20, 20, i * 20, j * 20);
+                lvlObjs->setFinish(finish);
             }
             if (currChar == '\n'){
                 j++;
@@ -96,7 +110,7 @@ int main(int argv, char **args)
             var->draw();
         }
         lvlObjs->getPlayer()->draw();
-
+        lvlObjs->getFinish()->draw();
 
         
         // triggers the double buffers

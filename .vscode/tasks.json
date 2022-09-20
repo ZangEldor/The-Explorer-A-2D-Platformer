@@ -12,7 +12,7 @@
                 "player.cpp",
                 "Spike.cpp",
                 "Enemy.cpp",
-                
+                "LevelFinish.cpp",
                 "block.cpp",
 
                 "LevelObjects.cpp",

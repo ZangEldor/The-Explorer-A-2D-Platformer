@@ -18,7 +18,7 @@ std::vector<Block *> LevelObjects::getInvBlocksList()
 Player *LevelObjects::getPlayer(){
     return this->player;
 }
-Collidable *LevelObjects::getFinish()
+LevelFinish *LevelObjects::getFinish()
 {
     return this->finish;
 }
@@ -37,6 +37,7 @@ void LevelObjects::addInvBlock(Block *invBlock)
 {
     this->invBlocks.push_back(invBlock);
 }
-void LevelObjects::setFinish(Collidable *finish){
+void LevelObjects::setFinish(LevelFinish *finish)
+{
     this->finish = finish;
 }

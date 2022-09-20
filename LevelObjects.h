@@ -1,6 +1,7 @@
 #ifndef LEVELOBJECTS_H
 #define LEVELOBJECTS_H
 //#include "Player.h"
+//#include "LevelFinish.h"
 #include <vector>
 #include <list>
 
@@ -8,6 +9,7 @@ class Player;
 class Collidable;
 class Enemy;
 class Block;
+class LevelFinish;
 class LevelObjects
 {
 private:
@@ -15,7 +17,7 @@ private:
     std::vector<Block *> blocks;
     Player *player;
     std::vector<Block *> invBlocks;
-    Collidable *finish;
+    LevelFinish *finish;
 
 public:
     LevelObjects();
@@ -23,11 +25,11 @@ public:
     std::vector<Block *> getBlocksList();
     std::vector<Block *> getInvBlocksList();
     Player *getPlayer();
-    Collidable *getFinish();
+    LevelFinish *getFinish();
     void addEnemy(Enemy *enemy);
     void setPlayer(Player *player);
     void addBlock(Block *block);
     void addInvBlock(Block *invBlock);
-    void setFinish(Collidable *finish);
+    void setFinish(LevelFinish *finish);
 };
 #endif

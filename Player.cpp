@@ -2,7 +2,8 @@
 #include "Block.h"
 #include "Enemy.h"
 //#include "Collidable.cpp"
-//#include "LevelObjects.h"
+#include "LevelObjects.h"
+#include "LevelFinish.h"
 #include <algorithm>
 Player::Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int* levelActivePtr) : Collidable(rendererArg, sprite_path, width, height, x, y)
 {
@@ -35,7 +36,6 @@ bool Player::checkEnemyCollision(LevelObjects *data){
     }
     return false;
 }
-
 void Player::update(int action, LevelObjects *data)
 {
     if (this->hook->getIsLaunched())
@@ -168,6 +168,9 @@ void Player::update(int action, LevelObjects *data)
         this->hook->getRect()->y = this->rect->y + (this->rect->h / 2) - (this->hook->getRect()->h / 2);
     }
     if(checkEnemyCollision(data)){
+        *(this->levelActivePtr) = 0;
+    }
+    if(SDL_HasIntersection(this->rect,data->getFinish()->getRect())){
         *(this->levelActivePtr) = 0;
     }
     this->hook->update(0, data);
