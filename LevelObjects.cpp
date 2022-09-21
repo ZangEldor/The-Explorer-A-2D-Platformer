@@ -1,4 +1,5 @@
 #include "LevelObjects.h"
+#include <stdio.h>
 LevelObjects::LevelObjects(){
     this->player = nullptr;
     this->finish = nullptr;
@@ -17,6 +18,10 @@ std::vector<Block *> LevelObjects::getInvBlocksList()
 }
 Player *LevelObjects::getPlayer(){
     return this->player;
+}
+Background *LevelObjects::getBackground()
+{
+    return this->background;
 }
 LevelFinish *LevelObjects::getFinish()
 {
@@ -40,4 +45,8 @@ void LevelObjects::addInvBlock(Block *invBlock)
 void LevelObjects::setFinish(LevelFinish *finish)
 {
     this->finish = finish;
+}
+void LevelObjects::setBackground(Background* background)
+{
+    this->background = background;
 }

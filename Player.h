@@ -21,7 +21,7 @@ private:
     public:
         Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int* levelActivePtr);
         ~Player();
-        virtual void draw();
-        virtual void update(int action, LevelObjects* data);
+         void draw();
+         void update(int action, LevelObjects* data);
 };
 #endif

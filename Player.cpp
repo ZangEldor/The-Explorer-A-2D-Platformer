@@ -11,7 +11,7 @@ Player::Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int heig
     this->horizontalRight = 1;
     this->speed = 20;
     this->levelActivePtr = levelActivePtr;
-    this->hook = new Hook(rendererArg, "C:\\Users\\eldor\\OneDrive\\Desktop\\hook.png", 20, 20, x + width, y + (height / 2), 1);
+    this->hook = new Hook(rendererArg, "Newfolder/hook.png", 20, 20, x + width, y + (height / 2), 1);
 }
 void Player::draw()
 {
@@ -56,7 +56,11 @@ void Player::update(int action, LevelObjects *data)
         }
         */
         if (hookPoint.x == currPoint.x){
-            this->rect->y -= speed;
+            if (std::abs(this->rect->y - hookPoint.y) > speed){
+                this->rect->y -= speed;
+            }else{
+                this->hook->setIsHooked(0);
+            }
         }else{
             double slope = (double)(hookPoint.y - currPoint.y) / (hookPoint.x - currPoint.x);
         double yIntersection = (double)(currPoint.y - slope * currPoint.x);

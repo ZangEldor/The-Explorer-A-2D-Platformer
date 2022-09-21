@@ -10,6 +10,7 @@ class Collidable;
 class Enemy;
 class Block;
 class LevelFinish;
+class Background;
 class LevelObjects
 {
 private:
@@ -18,6 +19,7 @@ private:
     Player *player;
     std::vector<Block *> invBlocks;
     LevelFinish *finish;
+    Background* background;
 
 public:
     LevelObjects();
@@ -25,9 +27,11 @@ public:
     std::vector<Block *> getBlocksList();
     std::vector<Block *> getInvBlocksList();
     Player *getPlayer();
+    Background* getBackground();
     LevelFinish *getFinish();
     void addEnemy(Enemy *enemy);
     void setPlayer(Player *player);
+    void setBackground(Background *background);
     void addBlock(Block *block);
     void addInvBlock(Block *invBlock);
     void setFinish(LevelFinish *finish);

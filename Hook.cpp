@@ -7,7 +7,7 @@
 Hook::Hook(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int horizontalRight) : Collidable(rendererArg, sprite_path, width, height, x, y)
 {
     this->isHooked = 0;
-     this->angle = 0.0;
+     this->angle = -45.0;
     this->isLaunched = 0.0;
     this->verticalUp = 1;
     this->horizontalRight = horizontalRight;
@@ -16,11 +16,11 @@ void Hook::draw()
 {
     if (horizontalRight)
     {
-        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, this->angle, NULL, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, (this->angle+45.0), NULL, SDL_FLIP_NONE);
     }
     else
     {
-        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, (-1 * this->angle), NULL, SDL_FLIP_HORIZONTAL);
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, (-1 * (this->angle+45.0)), NULL, SDL_FLIP_HORIZONTAL);
     }
 }
 void Hook::update(int action, LevelObjects *data)
