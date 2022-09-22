@@ -84,17 +84,17 @@ int main(int argv, char **args)
     SDL_Window *window = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
     Uint32 render_flgs = SDL_RENDERER_ACCELERATED;
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
-    SDL_SetRenderDrawColor(renderer, 16, 63, 100, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     LevelObjects *lvlObjs = new LevelObjects();
-    Background *background = new Background(renderer, "Newfolder/background.png", 800, 600, 0, 0);
+    Background *background = new Background(renderer, "Sprites/background.png", 800, 600, 0, 0);
     lvlObjs->setBackground(background);
     int levelActive = 1;
     int* levelActivePtr = &levelActive;
     int i=0,j=0;
     
     //std::ifstream fileStream("level.txt");
-    char *playerSprite = (char*) "bigplayer.png";
-    FILE *file = fopen("Newfolder/level.txt", "rb");
+    char *playerSprite = (char *)"Sprites/bigplayer.png";
+    FILE *file = fopen("Levels/level.txt", "rb");
     if (!file)
     {
         printf("cannot open file\n");
@@ -107,32 +107,32 @@ int main(int argv, char **args)
         {
             if (currChar == 'P')
             {
-                Player *player = new Player(renderer, "Newfolder/bigplayer.png", 40, 60, i * 20, j * 20, levelActivePtr);
+                Player *player = new Player(renderer, "Sprites/bigplayer.png", 40, 60, i * 20, j * 20, levelActivePtr);
                 lvlObjs->setPlayer(player);
             }
             else if (currChar == '0')
             {
-                Block *block = new Block(renderer, "Newfolder/floor.png", 20, 20, i * 20, j * 20);
+                Block *block = new Block(renderer, "Sprites/floor.png", 20, 20, i * 20, j * 20);
                 lvlObjs->addBlock(block);
             }
             else if (currChar == '1')
             {
-                Block *block = new Block(renderer, "Newfolder/block.png", 20, 20, i * 20, j * 20);
+                Block *block = new Block(renderer, "Sprites/block.png", 20, 20, i * 20, j * 20);
                 lvlObjs->addBlock(block);
             }
             else if (currChar == 'E')
             {
-                Enemy *enemy = new Enemy(renderer, "Newfolder/enemy.png", 20, 20, i * 20, j * 20);
+                Enemy *enemy = new Enemy(renderer, "Sprites/enemy.png", 20, 20, i * 20, j * 20);
                 lvlObjs->addEnemy(enemy);
             }
             else if (currChar == 'S')
             {
-                Enemy *enemy = new Spike(renderer, "Newfolder/spike.png", 20, 20, i * 20, j * 20);
+                Enemy *enemy = new Spike(renderer, "Sprites/spike.png", 20, 20, i * 20, j * 20);
                 lvlObjs->addEnemy(enemy);
             }
             else if (currChar == 'F')
             {
-                LevelFinish *finish = new LevelFinish(renderer, "Newfolder/flag.png", 20, 60, i * 20, j * 20);
+                LevelFinish *finish = new LevelFinish(renderer, "Sprites/flag.png", 20, 60, i * 20, j * 20);
                 lvlObjs->setFinish(finish);
             }
             if (currChar == '\n')

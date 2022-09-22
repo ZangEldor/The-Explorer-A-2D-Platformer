@@ -119,6 +119,10 @@ int Hook::getIsLaunched()
 {
     return this->isLaunched;
 }
+double Hook::getAngle()
+{
+    return this->angle;
+}
 Hook::~Hook()
 {
 }

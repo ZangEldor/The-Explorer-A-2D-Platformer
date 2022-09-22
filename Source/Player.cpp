@@ -11,18 +11,39 @@ Player::Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int heig
     this->horizontalRight = 1;
     this->speed = 20;
     this->levelActivePtr = levelActivePtr;
-    this->hook = new Hook(rendererArg, "Newfolder/hook.png", 20, 20, x + width, y + (height / 2), 1);
+    this->hook = new Hook(rendererArg, "Sprites/hook.png", 20, 20, x + 25, y + 4, 1);
 }
 void Player::draw()
 {
+    SDL_Point hookCenter;
+    hookCenter.x = this->hook->getRect()->x + this->hook->getRect()->w / 2;
+    hookCenter.y = this->hook->getRect()->y + this->hook->getRect()->h / 2;
     if (horizontalRight)
     {
-        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, NULL, NULL, SDL_FLIP_NONE);
-    }
-    else
-    {
-        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, NULL, NULL, SDL_FLIP_HORIZONTAL);
-    }
+        if (this->hook->getIsHooked() || this->hook->getIsLaunched())
+        {
+            /*
+            double cosinusAngle = std::cos(this->hook->getAngle() * 3.14 / 180);
+            double sinusAngle = std::sin(this->hook->getAngle() * 3.14 / 180);
+            SDL_Point hookDownLeftPoint;
+
+            hookDownLeftPoint.x = this->hook->getRect()->x;
+            hookDownLeftPoint.y = this->hook->getRect()->y + this->hook->getRect()->h;
+            double rotatedX = hookCenter.x + (hookDownLeftPoint.x - hookCenter.x) * cosinusAngle - (hookDownLeftPoint.y - hookCenter.y) * sinusAngle;
+            double rotatedY = hookCenter.y + (hookDownLeftPoint.x - hookCenter.x) * sinusAngle + (hookDownLeftPoint.y - hookCenter.y) * cosinusAngle;
+  */
+            SDL_RenderDrawLine(this->renderer, this->getRect()->x + 26, this->getRect()->y + 22, hookCenter.x, hookCenter.y);
+        }
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, NULL, &hookCenter, SDL_FLIP_NONE);
+        }
+        else
+        {
+            if (this->hook->getIsHooked() || this->hook->getIsLaunched())
+            {
+                SDL_RenderDrawLine(this->renderer, this->getRect()->x + 12, this->getRect()->y + 22, hookCenter.x, hookCenter.y);
+            }
+                SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, NULL, &hookCenter, SDL_FLIP_HORIZONTAL);
+            }
     this->hook->draw();
 }
 bool Player::checkEnemyCollision(LevelObjects *data){
@@ -150,7 +171,7 @@ void Player::update(int action, LevelObjects *data)
                 break;
             }
         }
-        this->rect->y += speed;
+        this->rect->y += speed/4;
         for (auto *block : data->getBlocksList())
         {
             SDL_Rect *currRect = block->getRect();
@@ -163,13 +184,13 @@ void Player::update(int action, LevelObjects *data)
 
         if (this->horizontalRight)
         {
-            this->hook->getRect()->x = this->rect->x + this->rect->w;
+            this->hook->getRect()->x = this->rect->x + 25;
         }
         else
         {
-            this->hook->getRect()->x = this->rect->x - this->hook->getRect()->w;
+            this->hook->getRect()->x = this->rect->x - 6;
         }
-        this->hook->getRect()->y = this->rect->y + (this->rect->h / 2) - (this->hook->getRect()->h / 2);
+        this->hook->getRect()->y = this->rect->y + 4;
     }
     if(checkEnemyCollision(data)){
         *(this->levelActivePtr) = 0;

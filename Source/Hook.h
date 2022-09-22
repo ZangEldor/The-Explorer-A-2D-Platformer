@@ -21,6 +21,7 @@ public:
     ~Hook();
     int getIsHooked();
     int getIsLaunched();
+    double getAngle();
     void setHorizontalRight(int value);
     void setIsLaunced(int value);
     void setIsHooked(int value);
