@@ -7,7 +7,7 @@
 Hook::Hook(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int horizontalRight) : Collidable(rendererArg, sprite_path, width, height, x, y)
 {
     this->isHooked = 0;
-     this->angle = -45.0;
+    this->angle = -45.0;
     this->isLaunched = 0.0;
     this->verticalUp = 1;
     this->horizontalRight = horizontalRight;
@@ -16,11 +16,11 @@ void Hook::draw()
 {
     if (horizontalRight)
     {
-        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, (this->angle+45.0), NULL, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, (this->angle + 45.0), NULL, SDL_FLIP_NONE);
     }
     else
     {
-        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, (-1 * (this->angle+45.0)), NULL, SDL_FLIP_HORIZONTAL);
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, (-1 * (this->angle + 45.0)), NULL, SDL_FLIP_HORIZONTAL);
     }
 }
 void Hook::update(int action, LevelObjects *data)
@@ -67,7 +67,7 @@ void Hook::update(int action, LevelObjects *data)
             adjustmentDegree = 90;
         }
         */
-        radianAngle = (-1*angle + adjustmentDegree) * (3.14 / 180);
+        radianAngle = (-1 * angle + adjustmentDegree) * (3.14 / 180);
         double result = 20 * sin(radianAngle);
         if (angle <= 0)
         {
@@ -86,7 +86,8 @@ void Hook::update(int action, LevelObjects *data)
         {
             this->rect->x -= result;
         }
-        for (auto *block : data->getBlocksList())
+        auto *list = data->getBlocksList();
+        for (auto *block : *list)
         {
             SDL_Rect *currRect = block->getRect();
             if (SDL_HasIntersection(this->rect, currRect))
@@ -95,7 +96,7 @@ void Hook::update(int action, LevelObjects *data)
                 this->rect->y = currLocation.y;
                 isLaunched = 0;
                 this->isHooked = 1;
-                 break;
+                break;
             }
         }
     }
@@ -112,7 +113,8 @@ void Hook::setIsLaunced(int value)
 {
     this->isLaunched = value;
 }
-int Hook::getIsHooked(){
+int Hook::getIsHooked()
+{
     return this->isHooked;
 }
 int Hook::getIsLaunched()

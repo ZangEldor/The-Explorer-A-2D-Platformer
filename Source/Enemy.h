@@ -4,7 +4,7 @@
 class Enemy : public Collidable, Updatable
 {
     int speed;
-     int horizontalRight;
+    int horizontalRight;
 
 public:
     Enemy(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y);

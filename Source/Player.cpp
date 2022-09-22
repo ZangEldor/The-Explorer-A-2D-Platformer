@@ -5,7 +5,7 @@
 #include "LevelObjects.h"
 #include "LevelFinish.h"
 #include <algorithm>
-Player::Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int* levelActivePtr) : Collidable(rendererArg, sprite_path, width, height, x, y)
+Player::Player(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y, int *levelActivePtr) : Collidable(rendererArg, sprite_path, width, height, x, y)
 {
     this->isHookLaunched = 0;
     this->horizontalRight = 1;
@@ -22,35 +22,27 @@ void Player::draw()
     {
         if (this->hook->getIsHooked() || this->hook->getIsLaunched())
         {
-            /*
-            double cosinusAngle = std::cos(this->hook->getAngle() * 3.14 / 180);
-            double sinusAngle = std::sin(this->hook->getAngle() * 3.14 / 180);
-            SDL_Point hookDownLeftPoint;
 
-            hookDownLeftPoint.x = this->hook->getRect()->x;
-            hookDownLeftPoint.y = this->hook->getRect()->y + this->hook->getRect()->h;
-            double rotatedX = hookCenter.x + (hookDownLeftPoint.x - hookCenter.x) * cosinusAngle - (hookDownLeftPoint.y - hookCenter.y) * sinusAngle;
-            double rotatedY = hookCenter.y + (hookDownLeftPoint.x - hookCenter.x) * sinusAngle + (hookDownLeftPoint.y - hookCenter.y) * cosinusAngle;
-  */
             SDL_RenderDrawLine(this->renderer, this->getRect()->x + 26, this->getRect()->y + 22, hookCenter.x, hookCenter.y);
         }
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, NULL, &hookCenter, SDL_FLIP_NONE);
-        }
-        else
+    }
+    else
+    {
+        if (this->hook->getIsHooked() || this->hook->getIsLaunched())
         {
-            if (this->hook->getIsHooked() || this->hook->getIsLaunched())
-            {
-                SDL_RenderDrawLine(this->renderer, this->getRect()->x + 12, this->getRect()->y + 22, hookCenter.x, hookCenter.y);
-            }
-                SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, NULL, &hookCenter, SDL_FLIP_HORIZONTAL);
-            }
+            SDL_RenderDrawLine(this->renderer, this->getRect()->x + 12, this->getRect()->y + 22, hookCenter.x, hookCenter.y);
+        }
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, this->rect, NULL, &hookCenter, SDL_FLIP_HORIZONTAL);
+    }
     this->hook->draw();
 }
-bool Player::checkEnemyCollision(LevelObjects *data){
-    for (auto *enemy : data->getEnemiesList())
+bool Player::checkEnemyCollision(LevelObjects *data)
+{
+    for (auto *enemy : *data->getEnemiesList())
     {
 
-        if (SDL_HasIntersection(this->rect,enemy->getRect()))
+        if (SDL_HasIntersection(this->rect, enemy->getRect()))
         {
             return true;
         }
@@ -70,38 +62,33 @@ void Player::update(int action, LevelObjects *data)
         hookPoint.y = this->hook->getRect()->y;
         currPoint.x = this->rect->x;
         currPoint.y = this->rect->y;
-        /*
-        if(currPoint.y == hookPoint.y){
-            this->rect->y -= speed / 30;
-            return;
-        }
-        */
-        if (hookPoint.x == currPoint.x){
-            if (std::abs(this->rect->y - hookPoint.y) > speed){
+        if (std::abs(hookPoint.x - currPoint.x) < speed)
+        {
+            if (std::abs(this->rect->y - hookPoint.y) > speed)
+            {
                 this->rect->y -= speed;
-            }else{
+            }
+            else
+            {
                 this->hook->setIsHooked(0);
             }
-        }else{
-            double slope = (double)(hookPoint.y - currPoint.y) / (hookPoint.x - currPoint.x);
-        double yIntersection = (double)(currPoint.y - slope * currPoint.x);
-        if (this->horizontalRight)
-        {
-            this->rect->x += speed;
         }
         else
         {
-            this->rect->x -= speed;
+            double slope = (double)(hookPoint.y - currPoint.y) / (hookPoint.x - currPoint.x);
+            double yIntersection = (double)(currPoint.y - slope * currPoint.x);
+            if (this->horizontalRight)
+            {
+                this->rect->x += speed;
+            }
+            else
+            {
+                this->rect->x -= speed;
+            }
+            double newY = this->rect->x * slope + yIntersection;
+            this->rect->y = newY;
         }
-        double newY =this->rect->x * slope + yIntersection;
-        /*
-        if (std::abs(newY - this->rect->y)>=20){
-             newY = this->rect->y - 19;
-        }
-        */
-        this->rect->y = newY;
-        }
-        for (auto *block : data->getBlocksList())
+        for (auto *block : *data->getBlocksList())
         {
             SDL_Rect *currRect = block->getRect();
             if (!SDL_HasIntersection(this->rect, currRect))
@@ -111,28 +98,11 @@ void Player::update(int action, LevelObjects *data)
             this->rect->x = currPoint.x;
             this->rect->y = currPoint.y;
             this->hook->setIsHooked(0);
-
-            /*
-            if (this->horizontalRight)
-            {
-                this->rect->x = currRect->x - this->rect->w;
-            }
-            else
-            {
-                this->rect->x = currRect->x + currRect->w;
-            }
-            while (SDL_HasIntersection(this->rect, currRect)){
-                this->rect->y += 1;
-            }
-                //this->rect->y = currRect->y + currRect->h;
-            this->hook->setIsHooked(0);
-            break;
-            */
         }
-        
     }
     else
     {
+
         switch (action)
         {
         case left:
@@ -152,13 +122,17 @@ void Player::update(int action, LevelObjects *data)
         default:
             break;
         }
-        for (auto *block : data->getBlocksList())
+
+        for (auto *block : *data->getBlocksList())
         {
             SDL_Rect *currRect = block->getRect();
+
             if (!SDL_HasIntersection(this->rect, currRect))
             {
+
                 continue;
             }
+
             switch (action)
             {
             case left:
@@ -171,8 +145,9 @@ void Player::update(int action, LevelObjects *data)
                 break;
             }
         }
-        this->rect->y += speed/4;
-        for (auto *block : data->getBlocksList())
+
+        this->rect->y += speed / 4;
+        for (auto *block : *data->getBlocksList())
         {
             SDL_Rect *currRect = block->getRect();
             if (!SDL_HasIntersection(this->rect, currRect))
@@ -192,11 +167,15 @@ void Player::update(int action, LevelObjects *data)
         }
         this->hook->getRect()->y = this->rect->y + 4;
     }
-    if(checkEnemyCollision(data)){
+
+    if (checkEnemyCollision(data))
+    {
         *(this->levelActivePtr) = 0;
     }
-    if(SDL_HasIntersection(this->rect,data->getFinish()->getRect())){
-        *(this->levelActivePtr) = 0;
+
+    if (SDL_HasIntersection(this->rect, data->getFinish()->getRect()))
+    {
+        *(this->levelActivePtr) = 2;
     }
     this->hook->update(0, data);
 }

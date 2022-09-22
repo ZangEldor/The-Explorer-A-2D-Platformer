@@ -6,8 +6,6 @@ class LevelObjects;
 class Updatable
 {
 private:
-
-
 public:
     virtual void update(int action, LevelObjects *data) = 0;
 };

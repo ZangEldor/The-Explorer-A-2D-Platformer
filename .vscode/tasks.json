@@ -14,9 +14,9 @@
                 "Enemy.cpp",
                 "LevelFinish.cpp",
                 "block.cpp",
-
+                "InvBlock.cpp",
                 "LevelObjects.cpp",
-                
+                "Background.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-lmingw32",

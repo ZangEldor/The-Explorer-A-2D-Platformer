@@ -11,29 +11,34 @@ class Enemy;
 class Block;
 class LevelFinish;
 class Background;
+class InvBlock;
 class LevelObjects
 {
 private:
     std::vector<Enemy *> enemies;
     std::vector<Block *> blocks;
     Player *player;
-    std::vector<Block *> invBlocks;
+    std::vector<InvBlock *> invBlocks;
     LevelFinish *finish;
-    Background* background;
+    Background *background;
+    int *levelActive;
 
 public:
     LevelObjects();
-    std::vector<Enemy *> getEnemiesList();
-    std::vector<Block *> getBlocksList();
-    std::vector<Block *> getInvBlocksList();
+    std::vector<Enemy *> *getEnemiesList();
+    std::vector<Block *> *getBlocksList();
+    std::vector<InvBlock *> *getInvBlocksList();
     Player *getPlayer();
-    Background* getBackground();
+    Background *getBackground();
     LevelFinish *getFinish();
     void addEnemy(Enemy *enemy);
     void setPlayer(Player *player);
+    void setLevelActive(int *levelActivePtr);
+    void setLevelActiveValue(int val);
+    int *getLevelActive();
     void setBackground(Background *background);
     void addBlock(Block *block);
-    void addInvBlock(Block *invBlock);
+    void addInvBlock(InvBlock *invBlock);
     void setFinish(LevelFinish *finish);
 };
 #endif

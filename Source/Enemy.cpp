@@ -1,10 +1,10 @@
 #include "Enemy.h"
 #include "Block.h"
-
+#include "InvBlock.h"
 Enemy::Enemy(SDL_Renderer *rendererArg, char *sprite_path, int width, int height, int x, int y) : Collidable(rendererArg, sprite_path, width, height, x, y)
 {
     this->horizontalRight = 1;
-    this->speed = 200;
+    this->speed = 2;
 }
 void Enemy::draw()
 {
@@ -21,13 +21,13 @@ void Enemy::update(int action, LevelObjects *data)
 {
     if (this->horizontalRight)
     {
-        this->rect->x += speed / 30;
+        this->rect->x += speed;
     }
     else
     {
-        this->rect->x -= speed / 30;
+        this->rect->x -= speed;
     }
-    for (auto *block : data->getBlocksList())
+    for (auto *block : *data->getBlocksList())
     {
         SDL_Rect *currRect = block->getRect();
         if (!SDL_HasIntersection(this->rect, currRect))
@@ -45,9 +45,29 @@ void Enemy::update(int action, LevelObjects *data)
             this->horizontalRight = 1;
         }
     }
+    for (auto *block : *data->getInvBlocksList())
+    {
+
+        SDL_Rect *currRect = block->getRect();
+        if (!SDL_HasIntersection(this->rect, currRect))
+        {
+            continue;
+        }
+        if (this->horizontalRight)
+        {
+            this->rect->x = currRect->x - this->rect->w;
+            this->horizontalRight = 0;
+        }
+        else
+        {
+            this->rect->x = currRect->x + currRect->w;
+            this->horizontalRight = 1;
+        }
+    }
+    /*
     // gravity
-    this->rect->y += speed / 30;
-    for (auto *block : data->getBlocksList())
+   // this->rect->y += speed / 30;
+    for (auto *block : *data->getBlocksList())
     {
         SDL_Rect *currRect = block->getRect();
         if (!SDL_HasIntersection(this->rect, currRect))
@@ -56,6 +76,7 @@ void Enemy::update(int action, LevelObjects *data)
         }
         this->rect->y = currRect->y - this->rect->h;
     }
+    */
 }
 Enemy::~Enemy()
 {
