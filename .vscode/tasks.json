@@ -17,6 +17,7 @@
                 "InvBlock.cpp",
                 "LevelObjects.cpp",
                 "Background.cpp",
+                
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-lmingw32",
