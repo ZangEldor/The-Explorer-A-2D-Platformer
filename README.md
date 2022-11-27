@@ -11,7 +11,7 @@ Jam theme: Uncharted Lands.
 ## Dependencies
 In order to build this project the following libraries are needed:
 - SDL2
-- SDL2_image\
+- SDL2_image </p>
 Check [this link](https://wiki.libsdl.org/SDL2/Installation) for more information about installation.
 ## Building
 
