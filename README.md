@@ -24,8 +24,8 @@ Each level is a 40 x 30 grid with the following representations:
  - 1: block
  - 0: floor
  - S: spike
- - P: player (keep in mind that the player is 3 blocks tall)
- - F: finish (keep in mind that the finish is 3 blocks tall)
+ - P: player (keep in mind that the player is 3 blocks tall, with P representing the highest tile of the 3)
+ - F: finish (keep in mind that the finish is 3 blocks tall, with F representing the highest tile of the 3)
  - E: enemy
  - I: invisible block (used for controlling enemies movement)
     
