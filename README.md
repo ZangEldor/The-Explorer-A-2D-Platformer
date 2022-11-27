@@ -6,7 +6,7 @@ The Explorer is a 2D platforming game created with C++ and SDL  library for grap
 ## Online Version
 Web version is also available, created with Emscripten - **[click here to play](https://eldorz.itch.io/the-explorer)**.
 ## Game Jam
-The game was originally created as a submission for the [“Weekly Game Jam – Week 271”](https://itch.io/jam/weekly-game-jam-271).
+The game was originally created as a submission for the [“Weekly Game Jam – Week 271”](https://itch.io/jam/weekly-game-jam-271).\
 Jam theme: Uncharted Lands.
 ## Dependencies
 In order to build this project the following libraries are needed:
@@ -21,8 +21,8 @@ Clone the repository and build with the following command (enter from root direc
 ## Level Editor
 In order for creating your own levels, feel free to change the files under the Levels sub-directory.\
 Each level is a 40 x 30 grid with the following representations:
-1: block\
-0: floor\
+ - 1: block\
+ - 0: floor\
 S: spike\
 P: player (keep in mind that the player is 3 blocks tall)\
 F: finish (keep in mind that the finish is 3 blocks tall)\
