@@ -21,12 +21,12 @@ Clone the repository and build with the following command (enter from root direc
 ## Level Editor
 In order for creating your own levels, feel free to change the files under the Levels sub-directory.\
 Each level is a 40 x 30 grid with the following representations:
- - 1: block\
- - 0: floor\
- - S: spike\
- - P: player (keep in mind that the player is 3 blocks tall)\
- - F: finish (keep in mind that the finish is 3 blocks tall)\
- - E: enemy\
- - I: invisible block (used for controlling enemies movement)\
+ - 1: block
+ - 0: floor
+ - S: spike
+ - P: player (keep in mind that the player is 3 blocks tall)
+ - F: finish (keep in mind that the finish is 3 blocks tall)
+ - E: enemy
+ - I: invisible block (used for controlling enemies movement)
     
 
