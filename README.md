@@ -1,5 +1,6 @@
 # The Explorer - A 2D Platformer
 <img src="Sprites/GameCover.png" width="500" height="500" />\
+\
 The Explorer is a 2D platforming game created with C++ and SDL  library for graphical output and keyboard interaction.
 
 ## Online Version
