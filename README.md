@@ -1,5 +1,5 @@
 # The Explorer - A 2D Platformer
-
+![Game Poster](https://img.itch.zone/aW1nLzEwMDk3OTU5LnBuZw==/315x250#c/YGnwaQ.png)
 The Explorer is a 2D platforming game created with C++ and SDL  library for graphical output and keyboard interaction.
 Web version is also available, created with Emscripten - **[click here to play](https://eldorz.itch.io/the-explorer)**.
 ## Game Jam
